@@ -3,5 +3,9 @@
   "version": "0.0.1",
   "description": "Neutron: a boilerplate for Electron apps",
   "author": "Yan Foto <yan.foto@quaintous.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-load-plugins": "^1.0.0-rc.1"
+  }
 }
