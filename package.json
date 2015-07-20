@@ -1,0 +1,7 @@
+{
+  "name": "neutron",
+  "version": "0.0.1",
+  "description": "Neutron: a boilerplate for Electron apps",
+  "author": "Yan Foto <yan.foto@quaintous.com>",
+  "license": "MIT"
+}
