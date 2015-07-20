@@ -1,0 +1,11 @@
+{
+  "preset": "google",
+  "esnext": true,
+  "disallowSpacesInAnonymousFunctionExpression": null,
+  "validateLineBreaks": "LF",
+  "validateIndentation": 2,
+  "excludeFiles": ["node_modules/**"],
+  "maximumLineLength": 130,
+  "requireCamelCaseOrUpperCaseIdentifiers": true,
+  "validateQuoteMarks": "'"
+}
