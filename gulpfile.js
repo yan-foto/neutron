@@ -16,4 +16,10 @@ gulp.task('jscs', function() {
     .pipe($.jshint.reporter('fail'));
 });
 
+gulp.task('babel', function() {
+  return gulp.src('src/**/*.js')
+    .pipe($.babel())
+    .pipe(gulp.dest('dist'));
+});
+
 gulp.task('lint', ['jshint', 'jscs']);
