@@ -22,4 +22,14 @@ gulp.task('babel', function() {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('electron-manifest', function() {
+  var pkg = require('./package.json');
+
+  return $.file('package.json', JSON.stringify({
+    name: pkg.name,
+    version: pkg.version,
+    main: 'main.js'
+  }, null, 2), {src: true}).pipe(gulp.dest('dist'));
+});
+
 gulp.task('lint', ['jshint', 'jscs']);
