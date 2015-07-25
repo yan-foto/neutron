@@ -30,6 +30,12 @@ gulp.task('jade', function() {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('styles', function() {
+  return gulp.src('src/**/*.{scss,css}')
+    .pipe($.sass().on('error', console.error.bind(console, 'Sass error:')))
+    .pipe(gulp.dest('dist'));
+});
+
 gulp.task('electron-manifest', function() {
   var pkg = require('./package.json');
 
