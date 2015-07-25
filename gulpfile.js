@@ -24,6 +24,12 @@ gulp.task('babel', function() {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('jade', function() {
+  return gulp.src('src/**/*.jade')
+    .pipe($.jade())
+    .pipe(gulp.dest('dist'));
+});
+
 gulp.task('electron-manifest', function() {
   var pkg = require('./package.json');
 
