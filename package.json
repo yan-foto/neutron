@@ -5,6 +5,7 @@
   "author": "Yan Foto <yan.foto@quaintous.com>",
   "license": "MIT",
   "devDependencies": {
+    "browser-sync": "^2.8.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-file": "^0.2.0",
