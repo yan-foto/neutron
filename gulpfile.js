@@ -78,6 +78,7 @@ gulp.task('serve', ['build'], function() {
     }
   });
 
+  gulp.watch(sources.views, ['jade', reload]);
   gulp.watch(sources.scripts, ['scripts', reload]);
   gulp.watch(sources.styles, ['styles', reload]);
   gulp.watch(sources.bower, ['bower-assets', reload]);
