@@ -83,19 +83,25 @@ To ease the devlopment Browsersync has been integrated to refresh your app in th
 Bear in mind that in development mode your [`browser-window`s](https://github.com/atom/electron/blob/master/docs/api/browser-window.md) must fetch files from Browsersync's local sever ([`htt://localhost:3000`](htt://localhost:3000)):
 
 ```js
-mainWindow.loadUrl('http://localhost:3000/index.html');
+browserWindow.loadUrl('http://localhost:3000/index.html');
 ```
 whereas in production they should load local files as follows:
 
  ```js
- mainWindow.loadUrl('file://' + __dirname + '/index.html');
+ browserWindow.loadUrl('file://' + __dirname + '/index.html');
  ```
 
- this would be a piece of cake for y'all professionals out there!
+ You could also use `pathfinder` module with `browserWindow` to automatically point to Browsersync's local server *when* Electron is started in development mode (e.g. `ELECTRON_ENV=development ./electron`):
+
+ ```js
+ var pf = require('./util/pathfinder');
+ browserWindow.loadUrl(pf('file://' + __dirname + '/index.html'));
+ ```
 
 ## TODO
 * Add scripts to create [`asar`](https://github.com/atom/asar) packages for various platforms
 * Add automatic switch for Browsersync in dev mode
+* NPM script to run electron in dev mode
 * ?
 
 *All help and inspiration is welcomed. Please don't hesitate to open issues and to sent pull requests.*
