@@ -28,7 +28,7 @@ gulp.task('jscs', function() {
     .pipe($.jshint.reporter('fail'));
 });
 
-gulp.task('babel', function() {
+gulp.task('scripts', function() {
   return gulp.src(sources.scripts)
     .pipe($.babel())
     .pipe(gulp.dest('dist'));
@@ -87,4 +87,4 @@ gulp.task('bower-assets', ['bower-css-assets', 'bower-js-assets']);
 
 gulp.task('lint', ['jshint', 'jscs']);
 
-gulp.task('build', ['bower-assets', 'styles', 'jade', 'babel']);
+gulp.task('build', ['bower-assets', 'styles', 'jade', 'scripts']);
