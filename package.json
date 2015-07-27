@@ -4,8 +4,12 @@
   "description": "Neutron: a boilerplate for Electron apps",
   "author": "Yan Foto <yan.foto@quaintous.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "gulp start"
+  },
   "devDependencies": {
     "browser-sync": "^2.8.0",
+    "electron-prebuilt": "^0.30.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-file": "^0.2.0",

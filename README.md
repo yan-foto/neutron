@@ -17,7 +17,11 @@ If you want to generate a simple `package.json` file for your Electron app from 
 gulp electron-manifest
 ```
 
-This simply copies the name and version from your package file and sets the main file to `main.js`. The generated file is available under `dist/package.json`.
+This simply copies the name and version from your package file and sets the main file to `main.js`. The generated file is available under `dist/package.json`. After you have some actual pages and your `main.js` file is ready you can run the following to start electron and Browsersync:
+
+```
+npm start
+```
 
 ## File structure
 Source files should be located under the `src` folder and generated files are copied to `dist` folder. Also make sure that you have the main file in the `dist` folder.

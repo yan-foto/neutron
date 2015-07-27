@@ -7,6 +7,8 @@ var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var path = require('path');
 var fs = require('fs');
+var spawn = require('child_process').spawn;
+var electron = require('electron-prebuilt');
 
 var sources = {
   scripts: 'src/**/*.js',
@@ -82,6 +84,15 @@ gulp.task('serve', ['build'], function() {
   gulp.watch(sources.scripts, ['scripts', reload]);
   gulp.watch(sources.styles, ['styles', reload]);
   gulp.watch(sources.bower, ['bower-assets', reload]);
+});
+
+gulp.task('start', ['serve'], function() {
+  var env = process.env;
+  env['ELECTRON_ENV'] = 'development';
+
+  spawn(electron, ['dist'], {
+    env: env
+  });
 });
 
 gulp.task('bower-assets', ['bower-css-assets', 'bower-js-assets']);
