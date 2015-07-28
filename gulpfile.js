@@ -89,6 +89,7 @@ gulp.task('serve', ['build'], function() {
 gulp.task('start', ['serve'], function() {
   var env = process.env;
   env['ELECTRON_ENV'] = 'development';
+  env['NODE_PATH'] = path.join(__dirname, 'dist', 'node_modules');
 
   spawn(electron, ['dist'], {
     env: env
