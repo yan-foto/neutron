@@ -14,6 +14,7 @@ var sources = {
   scripts: 'src/**/*.js',
   views: 'src/**/*.jade',
   styles: 'src/**/*.{scss,css}',
+  fonts: 'src/**/*.{eot, ttf, woff, woff2}',
   bower: 'bower.json'
 };
 
@@ -48,6 +49,11 @@ gulp.task('styles', function() {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('fonts', function() {
+  return gulp.src(sources.fonts)
+    .pipe(gulp.dest('dist'));
+})
+
 gulp.task('electron-manifest', function() {
   var pkg = require('./package.json');
 
@@ -69,6 +75,13 @@ gulp.task('bower-css-assets', function() {
   if (fs.existsSync(sources.bower)) {
     return gulp.src(mainBowerFiles('**/*.css'))
       .pipe(gulp.dest(path.join('dist', 'css')));
+  }
+});
+
+gulp.task('bower-font-assets', function() {
+  if (fs.existsSync(sources.bower)) {
+    return gulp.src(mainBowerFiles(['**/*.eot', '**/*.ttf', '**/*.woff', '**/*.woff2']))
+      .pipe(gulp.dest(path.join('dist', 'fonts')));
   }
 });
 
@@ -96,7 +109,7 @@ gulp.task('start', ['serve'], function() {
   });
 });
 
-gulp.task('bower-assets', ['bower-css-assets', 'bower-js-assets']);
+gulp.task('bower-assets', ['bower-css-assets', 'bower-js-assets', 'bower-font-assets']);
 
 gulp.task('lint', ['jshint', 'jscs']);
 
