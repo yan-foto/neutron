@@ -52,7 +52,7 @@ gulp.task('styles', function() {
 gulp.task('fonts', function() {
   return gulp.src(sources.fonts)
     .pipe(gulp.dest('dist'));
-})
+});
 
 gulp.task('electron-manifest', function() {
   var pkg = require('./package.json');
@@ -101,8 +101,8 @@ gulp.task('serve', ['build'], function() {
 
 gulp.task('start', ['serve'], function() {
   var env = process.env;
-  env['ELECTRON_ENV'] = 'development';
-  env['NODE_PATH'] = path.join(__dirname, 'dist', 'node_modules');
+  env.ELECTRON_ENV = 'development';
+  env.NODE_PATH = path.join(__dirname, 'dist', 'node_modules');
 
   spawn(electron, ['dist'], {
     env: env
