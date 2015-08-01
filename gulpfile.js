@@ -104,8 +104,16 @@ gulp.task('start', ['serve'], function() {
   env.ELECTRON_ENV = 'development';
   env.NODE_PATH = path.join(__dirname, 'dist', 'node_modules');
 
-  spawn(electron, ['dist'], {
+  var e = spawn(electron, ['dist'], {
     env: env
+  });
+
+  e.stdout.on('data', function(data) {
+    $.util.log(data.toString().trim());
+  });
+
+  e.stderr.on('data', function(data) {
+    $.util.log($.util.colors.red(data.toString().trim()));
   });
 });
 
