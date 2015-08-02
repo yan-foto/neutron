@@ -3,8 +3,6 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var mainBowerFiles = require('main-bower-files');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
 var path = require('path');
 var fs = require('fs');
 var spawn = require('child_process').spawn;
@@ -85,21 +83,14 @@ gulp.task('bower-font-assets', function() {
   }
 });
 
-gulp.task('serve', ['build'], function() {
-  browserSync({
-    open: false,
-    server: {
-      baseDir: ['dist']
-    }
-  });
-
-  gulp.watch(sources.views, ['jade', reload]);
-  gulp.watch(sources.scripts, ['scripts', reload]);
-  gulp.watch(sources.styles, ['styles', reload]);
-  gulp.watch(sources.bower, ['bower-assets', reload]);
+gulp.task('watch', ['build'], function() {
+  gulp.watch(sources.views, ['jade']);
+  gulp.watch(sources.scripts, ['scripts']);
+  gulp.watch(sources.styles, ['styles']);
+  gulp.watch(sources.bower, ['bower-assets']);
 });
 
-gulp.task('start', ['serve'], function() {
+gulp.task('start', ['watch'], function() {
   var env = process.env;
   env.ELECTRON_ENV = 'development';
   env.NODE_PATH = path.join(__dirname, 'dist', 'node_modules');

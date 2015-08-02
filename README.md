@@ -1,8 +1,8 @@
 # Neutron
 Neutron enables rapid cross-platform [Electron](http://electron.atom.io/) app development. It uses [Babel](https://babeljs.io/) for ES6 support, [Jade](http://jade-lang.com/) as templating engine, [Sass](http://sass-lang.com/)
- for CSS preprocessing, and enables painless and clean [Bower](http://bower.io/) integration. Moreover, [Browsersync](http://www.browsersync.io/) is also included for a *refresh-free* development experience!
+ for CSS preprocessing, and enables painless and clean [Bower](http://bower.io/) integration. Moreover, auto reloading is also included for a *refresh-free* development experience!
 
- The idea is to keep your sources and ready-to-deliver files separate and only to package files that are necessary.
+ The idea is to keep your sources and ready-to-deliver files separate and only to package files that are necessary. *Remember kids*, neutron is way more than an electron boilerplate!
 
 ## Quick start
 Clone the library, install the dependencies:
@@ -78,34 +78,24 @@ If you want to override the main files of a bower package, lets say Bootstrap, y
 
 This would only copy the `alert.js` from Bootstrap package to `dist/js`.
 
-## Browsersync integration
-To ease the devlopment Browsersync has been integrated to refresh your app in the Electron container as soon as any of the following is updated:
+## Auto reload
+To ease the devlopment a small auto reload module has been provided to refresh your app in the Electron container as soon as any of the following is updated:
 
 * any file (stylesheet or script) in `src`
 * `bower.json` file
 
-Bear in mind that in development mode your [`browser-window`s](https://github.com/atom/electron/blob/master/docs/api/browser-window.md) must fetch files from Browsersync's local sever ([`htt://localhost:3000`](htt://localhost:3000)):
+The only thing to do is to pass the [`browser-window`](https://github.com/atom/electron/blob/master/docs/api/browser-window.md) you want to automatically refresh to the `dist-watcher` module:
 
 ```js
-browserWindow.loadUrl('http://localhost:3000/index.html');
+var BrowserWindow = require('browser-window');
+var watch = require('./util/dist-watcher');
+
+// Application preparation [...]
+
+mainWindow = new BrowserWindow({width: 800, height: 600});
+watch(mainWindow);
 ```
-whereas in production they should load local files as follows:
+Just note that a successful depends on gulp's `watch` task and electron must be started in development mode (`ELECTRON_ENV=development ./electron dist/`), so the easiest way is to use `npm start` (same as `gulp start`).
 
- ```js
- browserWindow.loadUrl('file://' + __dirname + '/index.html');
- ```
-
- You could also use `pathfinder` module with `browserWindow` to automatically point to Browsersync's local server *when* Electron is started in development mode (e.g. `ELECTRON_ENV=development ./electron`):
-
- ```js
- var pf = require('./util/pathfinder');
- browserWindow.loadUrl(pf('file://' + __dirname + '/index.html'));
- ```
-
-## TODO
-* Add scripts to create [`asar`](https://github.com/atom/asar) packages for various platforms
-* Add automatic switch for Browsersync in dev mode
-* NPM script to run electron in dev mode
-* ?
-
+## Contribution
 *All help and inspiration is welcomed. Please don't hesitate to open issues and to sent pull requests.*

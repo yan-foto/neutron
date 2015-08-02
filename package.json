@@ -8,7 +8,7 @@
     "start": "gulp start"
   },
   "devDependencies": {
-    "browser-sync": "^2.8.0",
+    "chokidar": "^1.0.5",
     "electron-prebuilt": "^0.30.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
