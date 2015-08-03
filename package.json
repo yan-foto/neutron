@@ -4,6 +4,11 @@
   "description": "Neutron: a boilerplate for Electron apps",
   "author": "Yan Foto <yan.foto@quaintous.com>",
   "license": "MIT",
+  "repository" :
+  {
+    "type" : "git",
+    "url" : "https://github.com/yan-foto/neutron"
+  },
   "scripts": {
     "start": "gulp start"
   },
