@@ -5,6 +5,7 @@ var $ = require('gulp-load-plugins')();
 var mainBowerFiles = require('main-bower-files');
 var path = require('path');
 var fs = require('fs');
+var del = require('del');
 var spawn = require('child_process').spawn;
 var electron = require('electron-prebuilt');
 
@@ -81,6 +82,10 @@ gulp.task('bower-font-assets', function() {
     return gulp.src(mainBowerFiles(['**/*.eot', '**/*.ttf', '**/*.woff', '**/*.woff2']))
       .pipe(gulp.dest(path.join('dist', 'fonts')));
   }
+});
+
+gulp.task('clean', function(cb) {
+  del(['dist/**/*', '!dist/package.json']);
 });
 
 gulp.task('watch', ['build'], function() {
