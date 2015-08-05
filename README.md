@@ -1,6 +1,10 @@
 <p align="center">
   <img alt="babel" src="https://cloud.githubusercontent.com/assets/1678441/9045406/38883674-3a23-11e5-9e32-278097feb772.png">
 </p>
+
+<p align="center">
+  <a href="https://travis-ci.org/yan-foto/neutronl"><img alt="Build Status" src="https://travis-ci.org/yan-foto/neutron.svg?branch=master"></a>
+</p>
 ---
 Neutron enables rapid cross-platform [Electron](http://electron.atom.io/) app development. It uses [Babel](https://babeljs.io/) for ES6 support, [Jade](http://jade-lang.com/) as templating engine, [Sass](http://sass-lang.com/)
  for CSS preprocessing, and enables painless and clean [Bower](http://bower.io/) integration. Moreover, auto reloading is also included for a *refresh-free* development experience!
