@@ -4,7 +4,7 @@ module.exports = function(mainWindow) {
   let env = process.env.ELECTRON_ENV || 'production';
 
   // Do nothing in production mode
-  if (env !== "development") {
+  if (env !== 'development') {
     return;
   }
 
