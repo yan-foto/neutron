@@ -8,24 +8,27 @@ var fs = require('fs');
 var del = require('del');
 var spawn = require('child_process').spawn;
 var electron = require('electron-prebuilt');
+var config = JSON.parse(fs.readFileSync('./.neutronrc'));
 
-var sources = {
-  scripts: 'src/**/*.js',
-  views: 'src/**/*.jade',
-  styles: 'src/**/*.{scss,css}',
-  fonts: 'src/**/*.{eot, ttf, woff, woff2}',
-  bower: 'bower.json'
-};
+// Prepare sources
+var sources = {};
+Object.keys(config.sources).forEach(function(type) {
+  sources[type] = config.sources[type].map(function(src) {
+    return config.baseDir + '/**/*.' + src;
+  });
+  sources[type].push('!' + config.baseDir + '/node_modules/**');
+});
+sources.bower = 'bower.json';
 
 gulp.task('jshint', function() {
-  return gulp.src([sources.scripts , 'gulpfile.js'])
+  return gulp.src(sources.scripts.concat('gulpfile.js'))
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.jshint.reporter('fail'));
 });
 
 gulp.task('jscs', function() {
-  return gulp.src([sources.scripts , 'gulpfile.js'])
+  return gulp.src(sources.scripts.concat('gulpfile.js'))
     .pipe($.jscs())
     .pipe($.jshint.reporter('fail'));
 });

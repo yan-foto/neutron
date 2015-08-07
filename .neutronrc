@@ -1,0 +1,9 @@
+{
+  "baseDir": "src",
+  "sources": {
+    "scripts": ["js", "jsx"],
+    "styles": ["scss", "css"],
+    "fonts": ["eot", "ttf", "woff", "woff2"],
+    "views": ["jade"]
+  }
+}
