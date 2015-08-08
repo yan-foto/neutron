@@ -82,7 +82,8 @@ gulp.task('bower-css-assets', function() {
 
 gulp.task('bower-font-assets', function() {
   if (fs.existsSync(sources.bower)) {
-    return gulp.src(mainBowerFiles(['**/*.eot', '**/*.ttf', '**/*.woff', '**/*.woff2']))
+    var glob = config.sources.fonts.map(function(ext) {return '**/*.' + ext;});
+    return gulp.src(mainBowerFiles(glob))
       .pipe(gulp.dest(path.join('dist', 'fonts')));
   }
 });
