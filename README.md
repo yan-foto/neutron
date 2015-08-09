@@ -86,23 +86,13 @@ If you want to override the main files of a bower package, lets say Bootstrap, y
 This would only copy the `alert.js` from Bootstrap package to `dist/js`.
 
 ## Auto reload
-To ease the devlopment a small auto reload module has been provided to refresh your app in the Electron container as soon as any of the following is updated:
-
-* any file (stylesheet or script) in `src`
-* `bower.json` file
-
-The only thing to do is to pass the [`browser-window`](https://github.com/atom/electron/blob/master/docs/api/browser-window.md) you want to automatically refresh to the `dist-watcher` module:
+To ease the development [`electron-reload`](https://github.com/yan-foto/electron-reload) has been integrated, the easiest way to integrate it would be require it on top of your main file:
 
 ```js
-var BrowserWindow = require('browser-window');
-var watch = require('./util/dist-watcher');
-
-// Application preparation [...]
-
-mainWindow = new BrowserWindow({width: 800, height: 600});
-watch(mainWindow);
+require('electron-reload')(__dirname);
 ```
-Just note that a successful depends on gulp's `watch` task and electron must be started in development mode (`ELECTRON_ENV=development ./electron dist/`), so the easiest way is to use `npm start` (same as `gulp start`).
+
+This would reload all `BrowserWindow`s if any of the files in `__dirname` is updated.
 
 ## Contribution
 *All help and inspiration is welcomed. Please don't hesitate to open issues and to sent pull requests.*
