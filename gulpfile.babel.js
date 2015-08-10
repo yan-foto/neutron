@@ -89,7 +89,7 @@ gulp.task('bower-font-assets', () => {
 });
 
 gulp.task('clean', (cb) => {
-  del(['dist/**/*', '!dist/package.json']);
+  del(['dist/**/*', 'package/', '!dist/package.json']);
 });
 
 gulp.task('watch', ['build'], () => {
@@ -115,6 +115,22 @@ gulp.task('start', ['watch'], () => {
   e.stderr.on('data', (data) => {
     $.util.log($.util.colors.red(data.toString().trim()));
   });
+});
+
+gulp.task('package', ['build'], (cb) => {
+  try {
+    let asar = require('asar');
+    let pkg = require('./dist/package.json');
+
+    asar.createPackage(
+      './dist/',
+      './package/'+pkg.name+'.asar',
+      cb
+    );
+  } catch (e) {
+    $.util.log('Error while creating asar package!', e);
+    cb(e);
+  }
 });
 
 gulp.task('bower-assets', ['bower-css-assets', 'bower-js-assets', 'bower-font-assets']);

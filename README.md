@@ -94,5 +94,8 @@ require('electron-reload')(__dirname);
 
 This would reload all `BrowserWindow`s if any of the files in `__dirname` is updated.
 
+## Packaging the app
+Packaging is done using the [`asar`](https://www.npmjs.com/package/asar) module and it can be triggered using `npm run packager` or `gulp package`. The resulting package is to be found under `packages` directory.
+
 ## Contribution
 *All help and inspiration is welcomed. Please don't hesitate to open issues and to sent pull requests.*
