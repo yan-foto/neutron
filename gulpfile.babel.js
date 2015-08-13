@@ -118,19 +118,13 @@ gulp.task('start', ['watch'], () => {
 });
 
 gulp.task('package', ['build'], (cb) => {
-  try {
-    let asar = require('asar');
-    let pkg = require('./dist/package.json');
-
-    asar.createPackage(
-      './dist/',
-      './package/'+pkg.name+'.asar',
-      cb
-    );
-  } catch (e) {
-    $.util.log('Error while creating asar package!', e);
-    cb(e);
-  }
+  var packager = require('electron-packager');
+  packager(config.packager, (err, appPath) => {
+    if (err)
+      $.util.log('Error while creating the package!', err);
+    else
+      cb();
+  });
 });
 
 gulp.task('bower-assets', ['bower-css-assets', 'bower-js-assets', 'bower-font-assets']);

@@ -5,5 +5,14 @@
     "styles": ["scss", "css"],
     "fonts": ["eot", "ttf", "woff", "woff2"],
     "views": ["jade"]
+  },
+  "packager": {
+    "dir": "dist",
+    "out": "packages",
+    "name": "neutron",
+    "platform": "all",
+    "arch": "all",
+    "version": "0.30.4",
+    "overwrite": true
   }
 }
