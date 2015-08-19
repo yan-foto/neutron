@@ -131,4 +131,4 @@ gulp.task('bower-assets', ['bower-css-assets', 'bower-js-assets', 'bower-font-as
 
 gulp.task('lint', ['jshint', 'jscs']);
 
-gulp.task('build', ['bower-assets', 'styles', 'jade', 'scripts']);
+gulp.task('build', ['bower-assets', 'styles', 'jade', 'scripts', 'fonts']);
