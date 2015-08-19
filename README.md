@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://travis-ci.org/yan-foto/neutronl"><img alt="Build Status" src="https://travis-ci.org/yan-foto/neutron.svg?branch=master"></a>
+  <a href="https://travis-ci.org/yan-foto/neutron"><img alt="Build Status" src="https://travis-ci.org/yan-foto/neutron.svg?branch=master"></a>
 </p>
 ---
 Neutron enables rapid cross-platform [Electron](http://electron.atom.io/) app development. It uses [Babel](https://babeljs.io/) for ES6 support, [Jade](http://jade-lang.com/) as templating engine, [Sass](http://sass-lang.com/)
