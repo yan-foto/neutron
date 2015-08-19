@@ -45,11 +45,17 @@ gulp.task('jade', () =>
     .pipe(gulp.dest('dist'))
 );
 
-gulp.task('styles', () =>
-  gulp.src(sources.styles)
-    .pipe($.sass().on('error', console.error.bind(console, 'Sass error:')))
+gulp.task('styles', () => {
+  let sass = $.sass().on('error', (error) => {
+    let message = new $.util.PluginError('sass', error.messageFormatted).toString();
+    $.util.log(message);
+    sass.emit('end');
+  });
+
+  return gulp.src(sources.styles)
+    .pipe(sass)
     .pipe(gulp.dest('dist'))
-);
+});
 
 gulp.task('fonts', () =>
   gulp.src(sources.fonts)
