@@ -33,11 +33,17 @@ gulp.task('jscs', () =>
     .pipe($.jshint.reporter('fail'))
 );
 
-gulp.task('scripts', () =>
-  gulp.src(sources.scripts)
-    .pipe($.babel())
+gulp.task('scripts', () => {
+  let babel = $.babel().on('error', (error) => {
+    let message = new $.util.PluginError('babel', error).toString();
+    $.util.log(message);
+    babel.emit('end');
+  });
+
+  return gulp.src(sources.scripts)
+    .pipe(babel)
     .pipe(gulp.dest('dist'))
-);
+});
 
 gulp.task('jade', () =>
   gulp.src(sources.views)
