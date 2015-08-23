@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="babel" src="https://cloud.githubusercontent.com/assets/1678441/9117806/d65c9f20-3c6c-11e5-93a4-7d28f13b2beb.png">
+  <img alt="babel" src="https://cloud.githubusercontent.com/assets/1678441/9429889/ccd2253a-49df-11e5-894e-81d52a36eb4b.png">
 </p>
 
 <p align="center">
