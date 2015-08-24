@@ -8,7 +8,7 @@ let fs = require('fs');
 let del = require('del');
 let spawn = require('child_process').spawn;
 let electron = require('electron-prebuilt');
-let config = JSON.parse(fs.readFileSync('./.neutronrc'));
+let config = JSON.parse(fs.readFileSync(path.join(__dirname, '.neutronrc')));
 
 // Prepare sources
 let sources = {};
