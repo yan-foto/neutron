@@ -8,63 +8,28 @@ let fs = require('fs');
 let del = require('del');
 let spawn = require('child_process').spawn;
 let electron = require('electron-prebuilt');
+
 let config = JSON.parse(fs.readFileSync(path.join(__dirname, '.neutronrc')));
+let du = require('./lib/dep-utils');
+let deps = config.dependencies;
 
-// Prepare sources
-let sources = {};
-Object.keys(config.sources).forEach(function(type) {
-  sources[type] = config.sources[type].map((src) =>
-    config.baseDir + '/**/*.' + src
-  );
-  sources[type].push('!' + config.baseDir + '/node_modules/**');
-});
-sources.bower = 'bower.json';
+// Prepare statics
+let statics = config.statics.map((ext) => config.baseDir + '/**/*.' + ext);
 
-gulp.task('jshint', () =>
-  gulp.src(sources.scripts.concat('gulpfile.js'))
-    .pipe($.jshint())
-    .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.jshint.reporter('fail'))
-);
-
-gulp.task('jscs', () =>
-  gulp.src(sources.scripts.concat('gulpfile.js'))
-    .pipe($.jscs())
-    .pipe($.jshint.reporter('fail'))
-);
-
-gulp.task('scripts', () => {
-  let babel = $.babel().on('error', (error) => {
-    let message = new $.util.PluginError('babel', error).toString();
-    $.util.log(message);
-    babel.emit('end');
-  });
-
-  return gulp.src(sources.scripts)
-    .pipe(babel)
-    .pipe(gulp.dest('dist'))
+// Import corresponding tasks
+Object.keys(deps).forEach((task) => {
+  gulp.task(task, require('./lib/tasks/' + task)());
 });
 
-gulp.task('jade', () =>
-  gulp.src(sources.views)
-    .pipe($.jade())
-    .pipe(gulp.dest('dist'))
-);
-
-gulp.task('styles', () => {
-  let sass = $.sass().on('error', (error) => {
-    let message = new $.util.PluginError('sass', error.messageFormatted).toString();
-    $.util.log(message);
-    sass.emit('end');
-  });
-
-  return gulp.src(sources.styles)
-    .pipe(sass)
-    .pipe(gulp.dest('dist'))
+gulp.task('bootstrap', (cb) => {
+  // Install required packages
+  let packages = Object.keys(deps).map((item) => 'gulp-' + item);
+  $.util.log('Trying to install packages:', $.util.colors.cyan(packages.join(', ')));
+  require('./lib/installer')(__dirname, packages, cb);
 });
 
-gulp.task('fonts', () =>
-  gulp.src(sources.fonts)
+gulp.task('statics', () =>
+  gulp.src(statics)
     .pipe(gulp.dest('dist'))
 );
 
@@ -79,23 +44,22 @@ gulp.task('electron-manifest', () => {
 });
 
 gulp.task('bower-js-assets', () => {
-  if (fs.existsSync(sources.bower)) {
+  if (fs.existsSync('bower.json')) {
     return gulp.src(mainBowerFiles('**/*.js'))
       .pipe(gulp.dest(path.join('dist', 'js')));
   }
 });
 
 gulp.task('bower-css-assets', () => {
-  if (fs.existsSync(sources.bower)) {
+  if (fs.existsSync('bower.json')) {
     return gulp.src(mainBowerFiles('**/*.css'))
       .pipe(gulp.dest(path.join('dist', 'css')));
   }
 });
 
-gulp.task('bower-font-assets', () => {
-  if (fs.existsSync(sources.bower)) {
-    let glob = config.sources.fonts.map((ext) => {return '**/*.' + ext;});
-    return gulp.src(mainBowerFiles(glob))
+gulp.task('bower-static-assets', () => {
+  if (fs.existsSync('bower.json')) {
+    return gulp.src(mainBowerFiles(statics))
       .pipe(gulp.dest(path.join('dist', 'fonts')));
   }
 });
@@ -105,10 +69,9 @@ gulp.task('clean', (cb) => {
 });
 
 gulp.task('watch', ['build'], () => {
-  gulp.watch(sources.views, ['jade']);
-  gulp.watch(sources.scripts, ['scripts']);
-  gulp.watch(sources.styles, ['styles']);
-  gulp.watch(sources.bower, ['bower-assets']);
+  Object.keys(deps).forEach((task) => {
+    gulp.watch(du.srcGlob(task), [task]);
+  });
 });
 
 gulp.task('start', ['watch'], () => {
@@ -132,15 +95,16 @@ gulp.task('start', ['watch'], () => {
 gulp.task('package', ['build'], (cb) => {
   var packager = require('electron-packager');
   packager(config.packager, (err, appPath) => {
-    if (err)
+    if (err) {
       $.util.log('Error while creating the package!', err);
-    else
+    } else {
       cb();
+    }
   });
 });
 
-gulp.task('bower-assets', ['bower-css-assets', 'bower-js-assets', 'bower-font-assets']);
+gulp.task('bower-assets', ['bower-css-assets', 'bower-js-assets', 'bower-static-assets']);
 
-gulp.task('lint', ['jshint', 'jscs']);
+gulp.task('lint', du.lintTasks);
 
-gulp.task('build', ['bower-assets', 'styles', 'jade', 'scripts', 'fonts']);
+gulp.task('build', du.buildTasks.concat('bower-assets', 'statics'));

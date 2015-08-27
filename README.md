@@ -16,8 +16,11 @@ Clone the library, install the dependencies:
 
 ```
 git clone https://github.com/yan-foto/neutron.git
-npm install
+npm run bootstrap
 ```
+
+The bootstrap script will download all dependencies specified in `package.json` (equivalent to `npm install`) and will also include the dependency packages specified in `.neutrnrc`. For more information see [**Customization**](#customization).
+
 If you want to generate a simple `package.json` file for your Electron app from the existing `package.json` run the following command:
 
 ```
@@ -29,6 +32,23 @@ This simply copies the name and version from your package file and sets the main
 ```
 npm start
 ```
+
+## Customization
+You can choose which gulp packages you may need for your build and javascript lint procedures. These packages are defined in `.neutronrc` under the key `dependencies`. The default values are:
+
+```json
+"dependencies": {
+  "jshint": ["js", "jsx"],
+  "jscs": ["js", "jsx"],
+  "babel": ["js", "jsx"],
+  "jade": ["jade"],
+  "sass": ["scss", "css"]
+},
+```
+
+If you, for example, prefer to have your views written in vanilla HTML instead of jade, you can simply remove it from the dependencies.
+
+*Note that currently only the aforementioned gulp packages are supported.*
 
 ## File structure
 Source files should be located under the `src` folder and generated files are copied to `dist` folder. Also make sure that you have the main file in the `dist` folder.

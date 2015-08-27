@@ -1,10 +1,12 @@
 {
   "baseDir": "src",
-  "sources": {
-    "scripts": ["js", "jsx"],
-    "styles": ["scss", "css"],
-    "fonts": ["eot", "ttf", "woff", "woff2"],
-    "views": ["jade"]
+  "statics": ["eot", "ttf", "woff", "woff2"],
+  "dependencies": {
+    "jshint": ["js", "jsx"],
+    "jscs": ["js", "jsx"],
+    "babel": ["js", "jsx"],
+    "jade": ["jade"],
+    "sass": ["scss", "css"]
   },
   "packager": {
     "dir": "dist",
