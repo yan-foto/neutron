@@ -8,6 +8,7 @@
     "jade": ["jade"],
     "sass": ["scss", "css"]
   },
+  "cleanIgnore": [],
   "packager": {
     "dir": "dist",
     "out": "packages",

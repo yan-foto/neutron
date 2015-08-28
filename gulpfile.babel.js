@@ -65,7 +65,10 @@ gulp.task('bower-static-assets', () => {
 });
 
 gulp.task('clean', (cb) => {
-  del(['dist/**/*', 'package/', '!dist/package.json']);
+  let defaults = ['dist/**/*', 'package/', '!dist/package.json'];
+  let userDefined = config.cleanIgnore.map((path) => '!dist' + path);
+
+  del(defaults.concat(userDefined));
 });
 
 gulp.task('watch', ['build'], () => {
