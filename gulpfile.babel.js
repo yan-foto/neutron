@@ -18,8 +18,27 @@ let statics = config.statics.map((ext) => config.baseDir + '/**/*.' + ext);
 
 // Import corresponding tasks
 Object.keys(deps).forEach((task) => {
-  gulp.task(task, require('./lib/tasks/' + task)());
+  let t = require('./lib/tasks/' + task);
+
+  gulp.task(task, () => (
+    gulp.src(du.srcGlob(task))
+      .pipe(t())
+      .pipe(gulp.dest(config.targetDir))
+  ));
 });
+
+gulp.task('jscs', () => (
+  gulp.src(['src/**/*.js', 'gulpfile.babel.js', 'lib/**/*.js'])
+    .pipe($.jscs())
+    .pipe($.jshint.reporter('fail'))
+));
+
+gulp.task('jshint', () => (
+  gulp.src(['src/**/*.js', 'gulpfile.babel.js', 'lib/**/*.js'])
+    .pipe($.jshint())
+    .pipe($.jshint.reporter('jshint-stylish'))
+    .pipe($.jshint.reporter('fail'))
+));
 
 gulp.task('bootstrap', (cb) => {
   // Install required packages
@@ -108,6 +127,6 @@ gulp.task('package', ['build'], (cb) => {
 
 gulp.task('bower-assets', ['bower-css-assets', 'bower-js-assets', 'bower-static-assets']);
 
-gulp.task('lint', du.lintTasks);
+gulp.task('lint', ['jscs', 'jshint']);
 
-gulp.task('build', du.buildTasks.concat('bower-assets', 'statics'));
+gulp.task('build', Object.keys(deps).concat('bower-assets', 'statics'));

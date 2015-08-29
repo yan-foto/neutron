@@ -38,8 +38,6 @@ You can choose which gulp packages you may need for your build and javascript li
 
 ```json
 "dependencies": {
-  "jshint": ["js", "jsx"],
-  "jscs": ["js", "jsx"],
   "babel": ["js", "jsx"],
   "jade": ["jade"],
   "sass": ["scss", "css"]

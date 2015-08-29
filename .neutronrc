@@ -1,9 +1,8 @@
 {
   "baseDir": "src",
+  "targetDir": "dist",
   "statics": ["eot", "ttf", "woff", "woff2"],
   "dependencies": {
-    "jshint": ["js", "jsx"],
-    "jscs": ["js", "jsx"],
     "babel": ["js", "jsx"],
     "jade": ["jade"],
     "sass": ["scss", "css"]
