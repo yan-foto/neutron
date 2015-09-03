@@ -12,12 +12,23 @@ Neutron enables rapid cross-platform [Electron](http://electron.atom.io/) app de
  The idea is to keep your sources and ready-to-deliver files separate and only to package files that are necessary. *Remember kids*, neutron is way more than an electron boilerplate!
 
 ## Quick start
+### Yeoman way
+There's a generator for neutron! Run the following in an empty directory
+
+```
+yo neutron
+```
+
+and you're good to go!
+
+### Git way
 Clone the library, install the dependencies:
 
 ```
 git clone https://github.com/yan-foto/neutron.git
-npm run bootstrap
 ```
+
+### After installing
 
 The bootstrap script will download all dependencies specified in `package.json` (equivalent to `npm install`) and will also include the dependency packages specified in `.neutrnrc`. For more information see [**Customization**](#customization).
 
