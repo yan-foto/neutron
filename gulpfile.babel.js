@@ -1,5 +1,3 @@
-'use strict';
-
 let gulp = require('gulp');
 let $ = require('gulp-load-plugins')();
 let mainBowerFiles = require('main-bower-files');
