@@ -11,6 +11,13 @@ Neutron enables rapid cross-platform [Electron](http://electron.atom.io/) app de
 
  The idea is to keep your sources and ready-to-deliver files separate and only to package files that are necessary. *Remember kids*, neutron is way more than an electron boilerplate!
 
+## Requirements
+Since the gulp file leverages ES6 goodies, the only package required to bootstrap neutron is [`babel-core`](https://www.npmjs.com/package/babel-core):
+
+```
+npm install -g babel-core
+```
+
 ## Quick start
 ### Yeoman way
 There's a generator for neutron! Run the following in an empty directory
