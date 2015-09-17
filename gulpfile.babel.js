@@ -75,6 +75,7 @@ gulp.task('bower-css-assets', () => {
 });
 
 gulp.task('bower-static-assets', () => {
+  let statics = config.statics.map(ext => '/**/*.' + ext);
   if (fs.existsSync('bower.json')) {
     return gulp.src(mainBowerFiles(statics))
       .pipe(gulp.dest(path.join('dist', 'fonts')));
