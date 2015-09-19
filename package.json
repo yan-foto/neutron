@@ -20,13 +20,10 @@
     "electron-prebuilt": "^0.32",
     "electron-reload": "^0.0.2",
     "gulp": "^3.9.0",
-    "gulp-babel": "^5.1.0",
     "gulp-file": "^0.2.0",
-    "gulp-jade": "^1.0.1",
     "gulp-jscs": "^1.6.0",
     "gulp-jshint": "^1.11.2",
     "gulp-load-plugins": "^1.0.0-rc.1",
-    "gulp-sass": "^2.0.4",
     "gulp-util": "^3.0.6",
     "jshint-stylish": "^2.0.1",
     "main-bower-files": "^2.9.0"
