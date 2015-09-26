@@ -84,7 +84,7 @@ gulp.task('bower-static-assets', () => {
 
 gulp.task('clean', (cb) => {
   let defaults = ['dist/**/*', 'package/', '!dist/package.json'];
-  let userDefined = config.cleanIgnore.map((path) => '!dist' + path);
+  let userDefined = config.cleanIgnore.map((path) => '!dist/' + path);
 
   del(defaults.concat(userDefined));
 });
