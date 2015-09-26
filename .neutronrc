@@ -3,9 +3,16 @@
   "targetDir": "dist",
   "statics": ["eot", "ttf", "woff", "woff2"],
   "dependencies": {
-    "babel": ["js", "jsx"],
-    "jade": ["jade"],
-    "sass": ["scss", "css"]
+    "babel": {
+      "extensions": ["js", "jsx"]
+    },
+    "jade": {
+      "extensions": ["jade"]
+    },
+    "sass": {
+      "extensions": ["scss", "css"],
+      "includePaths": ["src/scss_include"]
+    }
   },
   "cleanIgnore": [],
   "packager": {

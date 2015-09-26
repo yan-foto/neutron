@@ -1,6 +1,6 @@
 {
   "name": "neutron",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Neutron: more than a boilerplate for Electron apps!",
   "author": "Yan Foto <yan.foto@quaintous.com>",
   "license": "MIT",
