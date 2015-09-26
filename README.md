@@ -60,10 +60,17 @@ You can choose which gulp packages you may need for your build and javascript li
 
 ```json
 "dependencies": {
-  "babel": ["js", "jsx"],
-  "jade": ["jade"],
-  "sass": ["scss", "css"]
-},
+  "babel": {
+    "extensions": ["js", "jsx"]
+  },
+  "jade": {
+    "extensions": ["jade"]
+  },
+  "sass": {
+    "extensions": ["scss", "css"],
+    "includePaths": ["src/scss_include"]
+  }
+}
 ```
 
 If you, for example, prefer to have your views written in vanilla HTML instead of jade, you can simply remove it from the dependencies.

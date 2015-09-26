@@ -20,7 +20,7 @@ Object.keys(deps).forEach((task) => {
 
   gulp.task(task, () => (
     gulp.src(du.srcGlob(task))
-      .pipe(t())
+      .pipe(t(config))
       .pipe(gulp.dest(config.targetDir))
   ));
 });
