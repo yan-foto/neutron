@@ -17,7 +17,7 @@
     "chokidar": "^1.0.5",
     "del": "^1.2.0",
     "electron-packager": "^5.0.1",
-    "electron-prebuilt": "^0.31.0",
+    "electron-prebuilt": "^0.32",
     "electron-reload": "^0.0.2",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
