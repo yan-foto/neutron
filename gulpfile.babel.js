@@ -11,9 +11,6 @@ let config = JSON.parse(fs.readFileSync(path.join(__dirname, '.neutronrc')));
 let du = require('./lib/dep-utils');
 let deps = config.dependencies;
 
-// Prepare statics
-let statics = config.statics.map((ext) => config.baseDir + '/**/*.' + ext);
-
 // Import corresponding tasks
 Object.keys(deps).forEach((task) => {
   let t = require('./lib/tasks/' + task);
@@ -45,10 +42,16 @@ gulp.task('bootstrap', (cb) => {
   require('./lib/installer')(__dirname, packages, cb);
 });
 
-gulp.task('statics', () =>
-  gulp.src(statics)
-    .pipe(gulp.dest('dist'))
-);
+gulp.task('statics', () => {
+  let statics = [];
+  Object.keys(config.statics).forEach(key => {
+    let globs = config.statics[key].map(ext => config.baseDir + '/**/*.' + ext);
+    statics = statics.concat(globs);
+  });
+
+  return gulp.src(statics)
+    .pipe(gulp.dest(config.targetDir));
+});
 
 gulp.task('electron-manifest', () => {
   let pkg = require('./package.json');
@@ -74,13 +77,22 @@ gulp.task('bower-css-assets', () => {
   }
 });
 
-gulp.task('bower-static-assets', () => {
-  let statics = config.statics.map(ext => '/**/*.' + ext);
-  if (fs.existsSync('bower.json')) {
-    return gulp.src(mainBowerFiles(statics))
-      .pipe(gulp.dest(path.join('dist', 'fonts')));
-  }
-});
+// Create bower static assets
+let bowerStaticTasks = [];
+if (fs.existsSync('bower.json')) {
+  Object.keys(config.statics).forEach(key => {
+    let taskName = 'bower-static:' + key;
+
+    gulp.task(taskName, () => {
+      let globs = config.statics[key].map(ext => '/**/*.' + ext);
+      return gulp.src(mainBowerFiles(globs))
+        .pipe(gulp.dest(path.join(config.targetDir, key)));
+    });
+
+    bowerStaticTasks.push(taskName);
+  });
+}
+gulp.task('bower-static-assets', bowerStaticTasks);
 
 gulp.task('clean', (cb) => {
   let defaults = ['dist/**/*', 'package/', '!dist/package.json'];

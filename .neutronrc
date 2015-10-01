@@ -1,7 +1,10 @@
 {
   "baseDir": "src",
   "targetDir": "dist",
-  "statics": ["eot", "ttf", "woff", "woff2"],
+  "statics": {
+    "fonts": ["eot", "ttf", "woff", "woff2"],
+    "img": ["png", "svg"]
+  },
   "dependencies": {
     "babel": {
       "extensions": ["js", "jsx"]
