@@ -37,6 +37,10 @@ git clone https://github.com/yan-foto/neutron.git
 
 ### After installing
 
+```
+gulp bootstrap
+```
+
 The bootstrap script will download all dependencies specified in `package.json` (equivalent to `npm install`) and will also include the dependency packages specified in `.neutrnrc`. For more information see [**Customization**](#customization).
 
 If you want to generate a simple `package.json` file for your Electron app from the existing `package.json` run the following command:
