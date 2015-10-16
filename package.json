@@ -1,7 +1,7 @@
 {
   "name": "neutron",
-  "version": "0.4.0",
-  "description": "Neutron: more than a boilerplate for Electron apps!",
+  "version": "0.4.1",
+  "description": "Neutron: the zero point of electron applications",
   "author": "Yan Foto <yan.foto@quaintous.com>",
   "license": "MIT",
   "repository": {

@@ -11,6 +11,12 @@ let config = JSON.parse(fs.readFileSync(path.join(__dirname, '.neutronrc')));
 let du = require('./lib/dep-utils');
 let deps = config.dependencies;
 
+// Helper function to DRY things up!
+let toTarget = subDir => {
+  let target = subDir ? path.join(config.targetDir, subDir) : config.targetDir;
+  return gulp.dest(target);
+};
+
 // Import corresponding tasks
 Object.keys(deps).forEach((task) => {
   let t = require('./lib/tasks/' + task);
@@ -23,13 +29,13 @@ Object.keys(deps).forEach((task) => {
 });
 
 gulp.task('jscs', () => (
-  gulp.src(['src/**/*.js', 'gulpfile.babel.js', 'lib/**/*.js'])
+  gulp.src([`${config.baseDir}/**/*.js`, 'gulpfile.babel.js', 'lib/**/*.js'])
     .pipe($.jscs())
     .pipe($.jshint.reporter('fail'))
 ));
 
 gulp.task('jshint', () => (
-  gulp.src(['src/**/*.js', 'gulpfile.babel.js', 'lib/**/*.js'])
+  gulp.src([`${config.baseDir}/**/*.js`, 'gulpfile.babel.js', 'lib/**/*.js'])
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.jshint.reporter('fail'))
@@ -45,12 +51,12 @@ gulp.task('bootstrap', (cb) => {
 gulp.task('statics', () => {
   let statics = [];
   Object.keys(config.statics).forEach(key => {
-    let globs = config.statics[key].map(ext => config.baseDir + '/**/*.' + ext);
+    let globs = config.statics[key].map(ext => `${config.baseDir}/**/*.${ext}`);
     statics = statics.concat(globs);
   });
 
   return gulp.src(statics)
-    .pipe(gulp.dest(config.targetDir));
+    .pipe(toTarget());
 });
 
 gulp.task('electron-manifest', () => {
@@ -60,20 +66,20 @@ gulp.task('electron-manifest', () => {
     name: pkg.name,
     version: pkg.version,
     main: 'main.js'
-  }, null, 2), {src: true}).pipe(gulp.dest('dist'));
+  }, null, 2), {src: true}).pipe(toTarget());
 });
 
 gulp.task('bower-js-assets', () => {
   if (fs.existsSync('bower.json')) {
     return gulp.src(mainBowerFiles('**/*.js'))
-      .pipe(gulp.dest(path.join('dist', 'js')));
+      .pipe(toTarget('js'));
   }
 });
 
 gulp.task('bower-css-assets', () => {
   if (fs.existsSync('bower.json')) {
     return gulp.src(mainBowerFiles('**/*.css'))
-      .pipe(gulp.dest(path.join('dist', 'css')));
+      .pipe(toTarget('css'));
   }
 });
 
@@ -86,7 +92,7 @@ if (fs.existsSync('bower.json')) {
     gulp.task(taskName, () => {
       let globs = config.statics[key].map(ext => '/**/*.' + ext);
       return gulp.src(mainBowerFiles(globs))
-        .pipe(gulp.dest(path.join(config.targetDir, key)));
+        .pipe(toTarget(key));
     });
 
     bowerStaticTasks.push(taskName);
@@ -95,8 +101,8 @@ if (fs.existsSync('bower.json')) {
 gulp.task('bower-static-assets', bowerStaticTasks);
 
 gulp.task('clean', (cb) => {
-  let defaults = ['dist/**/*', 'package/', '!dist/package.json'];
-  let userDefined = config.cleanIgnore.map((path) => '!dist/' + path);
+  let defaults = [`${config.targetDir}/**/*`, 'package/', `!${config.targetDir}/package.json`];
+  let userDefined = config.cleanIgnore.map((path) => `!${config.targetDir}/${path}`);
 
   del(defaults.concat(userDefined));
 });
@@ -110,9 +116,9 @@ gulp.task('watch', ['build'], () => {
 gulp.task('start', ['watch'], () => {
   let env = process.env;
   env.ELECTRON_ENV = 'development';
-  env.NODE_PATH = path.join(__dirname, 'dist', 'node_modules');
+  env.NODE_PATH = path.join(__dirname, config.targetDir, 'node_modules');
 
-  let e = spawn(electron, ['dist'], {
+  let e = spawn(electron, [config.targetDir], {
     env: env
   });
 
