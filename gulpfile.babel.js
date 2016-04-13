@@ -41,11 +41,11 @@ gulp.task('jshint', () => (
     .pipe($.jshint.reporter('fail'))
 ));
 
-gulp.task('bootstrap', (cb) => {
+gulp.task('bootstrap', () => {
   // Install required packages
   let packages = Object.keys(deps).map((item) => 'gulp-' + item);
   $.util.log('Trying to install packages:', $.util.colors.cyan(packages.join(', ')));
-  require('./lib/installer')(__dirname, packages, cb);
+  return require('./lib/installer')(packages);
 });
 
 gulp.task('statics', () => {
