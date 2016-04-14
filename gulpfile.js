@@ -39,9 +39,10 @@ gulp.task('eslint', () => (
     .pipe($.eslint.failAfterError())
 ));
 
-gulp.task('bootstrap', (cb) => {
+gulp.task('bootstrap', cb => {
   let pluginNames = Object.keys(deps);
-  $.util.log('Trying to install plugins:', $.util.colors.cyan(pluginNames.join(', ')));
+  $.util.log('Trying to install plugins:',
+    $.util.colors.cyan(pluginNames.join(', ')));
 
   // Boostrap plugins
   let instances = pluginNames.map(pluginName => {
@@ -106,15 +107,18 @@ if (fs.existsSync('bower.json')) {
 }
 gulp.task('bower-static-assets', bowerStaticTasks);
 
-gulp.task('clean', (cb) => {
-  let defaults = [`${config.targetDir}/**/*`, 'package/', `!${config.targetDir}/package.json`];
-  let userDefined = config.cleanIgnore.map((path) => `!${config.targetDir}/${path}`);
+gulp.task('clean', () => {
+  let defaults = [
+    `${config.targetDir}/**/*`,
+    'package/', `!${config.targetDir}/package.json`];
+  let userDefined = config.cleanIgnore.map(
+    path => `!${config.targetDir}/${path}`);
 
   del(defaults.concat(userDefined));
 });
 
 gulp.task('watch', ['build'], () => {
-  Object.keys(deps).forEach((task) => {
+  Object.keys(deps).forEach(task => {
     gulp.watch(du.srcGlob(task), [task]);
   });
 });
@@ -128,18 +132,18 @@ gulp.task('start', ['watch'], () => {
     env: env
   });
 
-  e.stdout.on('data', (data) => {
+  e.stdout.on('data', data => {
     $.util.log(data.toString().trim());
   });
 
-  e.stderr.on('data', (data) => {
+  e.stderr.on('data', data => {
     $.util.log($.util.colors.red(data.toString().trim()));
   });
 });
 
-gulp.task('package', ['build'], (cb) => {
+gulp.task('package', ['build'], cb => {
   var packager = require('electron-packager');
-  packager(config.packager, (err, appPath) => {
+  packager(config.packager, err => {
     if (err) {
       $.util.log('Error while creating the package!', err);
     } else {
@@ -148,7 +152,8 @@ gulp.task('package', ['build'], (cb) => {
   });
 });
 
-gulp.task('bower-assets', ['bower-css-assets', 'bower-js-assets', 'bower-static-assets']);
+gulp.task('bower-assets',
+  ['bower-css-assets', 'bower-js-assets', 'bower-static-assets']);
 
 gulp.task('lint', ['eslint']);
 
