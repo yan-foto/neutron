@@ -1,3 +1,5 @@
+'use strict';
+
 let gulp = require('gulp');
 let $ = require('gulp-load-plugins')();
 let mainBowerFiles = require('main-bower-files');
@@ -6,6 +8,7 @@ let fs = require('fs');
 let del = require('del');
 let spawn = require('child_process').spawn;
 let electron = require('electron-prebuilt');
+let Promise2 = require('bluebird');
 
 let config = JSON.parse(fs.readFileSync(path.join(__dirname, '.neutronrc')));
 let du = require('./lib/dep-utils');
@@ -18,12 +21,13 @@ let toTarget = subDir => {
 };
 
 // Import corresponding tasks
-Object.keys(deps).forEach((task) => {
-  let t = require('./lib/tasks/' + task);
+Object.keys(deps).forEach(pluginName => {
+  let Plugin = require('./lib/plugins/' + pluginName);
+  let instance = new Plugin();
 
-  gulp.task(task, () => (
-    gulp.src(du.srcGlob(task))
-      .pipe(t(config))
+  gulp.task(pluginName, () => (
+    gulp.src(du.srcGlob(pluginName))
+      .pipe(instance.getTask(config))
       .pipe(gulp.dest(config.targetDir))
   ));
 });
@@ -41,11 +45,19 @@ gulp.task('jshint', () => (
     .pipe($.jshint.reporter('fail'))
 ));
 
-gulp.task('bootstrap', () => {
-  // Install required packages
-  let packages = Object.keys(deps).map((item) => 'gulp-' + item);
-  $.util.log('Trying to install packages:', $.util.colors.cyan(packages.join(', ')));
-  return require('./lib/installer')(packages);
+gulp.task('bootstrap', (cb) => {
+  let pluginNames = Object.keys(deps);
+  $.util.log('Trying to install plugins:', $.util.colors.cyan(pluginNames.join(', ')));
+
+  // Boostrap plugins
+  let instances = pluginNames.map(pluginName => {
+    let Plugin = require(`./lib/plugins/${pluginName}`);
+    return new Plugin();
+  });
+
+  Promise2.map(instances, instance => instance.install())
+  .then(Promise2.map(instances, instance => instance.configure()))
+  .then(() => cb());
 });
 
 gulp.task('statics', () => {
