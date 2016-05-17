@@ -9,8 +9,8 @@
     "babel": {
       "extensions": ["js", "jsx"]
     },
-    "jade": {
-      "extensions": ["jade"]
+    "pug": {
+      "extensions": ["pug"]
     },
     "sass": {
       "extensions": ["scss", "css"],
