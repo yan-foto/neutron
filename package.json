@@ -1,6 +1,6 @@
 {
   "name": "neutron",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Neutron: the zero point of electron applications",
   "author": "Yan Foto <yan.foto@quaintous.com>",
   "license": "MIT",

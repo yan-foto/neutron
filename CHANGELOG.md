@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.2.0
+
+ - Deprecated Jade plugin in favor of plugin
+
 ## 1.1.0
 
  - Updated to Electron v. 1.0.2
