@@ -24,7 +24,7 @@
     "name": "neutron",
     "platform": "all",
     "arch": "all",
-    "version": "0.30.4",
+    "version": "1.0.2",
     "overwrite": true
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "neutron",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Neutron: the zero point of electron applications",
   "author": "Yan Foto <yan.foto@quaintous.com>",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "chokidar": "^1.0.5",
     "del": "^1.2.0",
     "electron-packager": "^5.0.1",
-    "electron-prebuilt": "^0.32",
+    "electron-prebuilt": "1.0.2",
     "electron-reload": "^0.0.2",
     "eslint": "^2.7.0",
     "eslint-config-google": "^0.5.0",
